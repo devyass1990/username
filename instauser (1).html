@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Username Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-color: #e1306c;
+            --secondary-color: #405de6;
+            --background-color: #fafafa;
+            --text-color: #262626;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        h2{
+          text-align: center
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .social-icons a {
+            color: var(--secondary-color);
+            font-size: 24px;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #dbdbdb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #output {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .good {
+            color: #4CAF50;
+        }
+
+        .bad {
+            color: #f44336;
+        }
+
+        .error {
+            color: #ff9800;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <div class="social-icons">
+        
+            <a href="https://www.facebook.com/yassin.sekou.37?mibextid=ZbWKwL" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/y30_s?igsh=ZzFjNXlnMTVxcG5p" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/message/X3T2IM5BYQTWH1" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://t.me/dev_alex_36" target="_blank"><i class="fab fa-telegram"></i></a>
+        </div>
+        <p>&copy; Developer Yassin </p>
+        <h1>Insta Username Generator</h1>
+    
+        <input type="text" id="telegramId" placeholder="Telegram ID">
+        <input type="text" id="botToken" placeholder="Bot Token">
+        <button onclick="generateUsernames()">Generate Usernames</button>
+    </div>
+
+    <div id="usernameModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Generated Usernames</h2>
+            <div id="output"></div>
+          
+        </div>
+    </div>
+
+    <script>
+    
+        const insta = "1234567890qwertyuiopasdfghjklzxcvbnm";
+        const all = ".";
+        const modal = document.getElementById("usernameModal");
+        const span = document.getElementsByClassName("close")[0];
+
+        function generateUsername() {
+            const v1 = insta[Math.floor(Math.random() * insta.length)];
+            const v2 = insta[Math.floor(Math.random() * insta.length)];
+            const v3 = insta[Math.floor(Math.random() * insta.length)];
+            const v4 = insta[Math.floor(Math.random() * insta.length)];
+            const v5 = all[Math.floor(Math.random() * all.length)];
+
+            const user1 = v5 + v1 + v2 + v3 + v4;
+            const user2 = v1 + v5 + v2 + v3 + v4;
+            const user3 = v1 + v2 + v5 + v3 + v4;
+            const user4 = v1 + v2 + v3 + v5 + v4;
+
+            return [user1, user2, user3, user4][Math.floor(Math.random() * 4)];
+        }
+
+        async function checkUsername(user) {
+            const url = 'https://api.instagram.com/v1/tags/{$tag}/media/recent?client_id={$clientID}&max_tag_id={$maxID';
+            const data = new URLSearchParams();
+            data.append('email', 'developmentoffice2078@gmail.com');
+            data.append('username', user);
+            data.append('first_name', '');
+            data.append('opt_into_one_tap', 'false');
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': 'jzhjt4G11O37lW1aDFyFmy1K0yIEN9Qv',
+                    },
+                    body: data
+                });
+
+                const result = await response.json();
+
+                if (result.errors && result.errors.username) {
+                    return { status: 'bad', message: `Bad user ➯ ${user}` };
+                } else if (!result.errors) {
+                    return { status: 'good', message: `Good User ➯ ${user}` };
+                } else {
+                    return { status: 'error', message: `Error User : ${user}` };
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                return { status: 'error', message: `Error checking username: ${user}` };
+            }
+        }
+
+        async function generateUsernames() {
+            const telegramId = document.getElementById('telegramId').value;
+            const botToken = document.getElementById('botToken').value;
+            const output = document.getElementById('output');
+
+            if (!telegramId || !botToken) {
+                alert('Please enter both Telegram ID and Bot Token.');
+                return;
+            }
+
+            output.innerHTML = '<p>Generating usernames...</p>';
+            modal.style.display = "block";
+
+            for (let i = 0; i < 10; i++) {
+                const user = generateUsername();
+                const result = await checkUsername(user);
+
+                const p = document.createElement('p');
+                p.textContent = result.message;
+                p.classList.add(result.status);
+                output.appendChild(p);
+
+                if (result.status === 'good') {
+                    const message = `This is your user: ${user}`;
+                    fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${telegramId}&text=${encodeURIComponent(message)}`)
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                        .catch(error => console.error('Error:', error));
+                }
+
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
